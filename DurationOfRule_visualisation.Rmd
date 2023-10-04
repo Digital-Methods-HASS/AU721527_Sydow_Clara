@@ -1,0 +1,43 @@
+---
+title: "Visualisation_kongeraekken"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+date: "2023-10-03"
+---
+# Download packages and read the csv file containing kongerækken
+```{r}
+library(tidyverse)
+kongeraekken <- read_csv("data_homework38/Kongerækken - Ark1-kopi.csv")
+
+```
+# Finding duration of reign
+To find duration of reign i used Mutate to subtract start of reign from end of reign
+Then i used the function glimps() to see a glimpse of how the spreadsheet looked with the new column duration of rule
+```{r}
+
+kongeraekken %>% 
+  mutate(duration_of_rule = end_of_reign - start_of_reign) %>% 
+  glimpse()
+
+```
+# Visualisation
+to visualise I used ggplot and the geom_line and geom_smooth.
+I choose the theme minimal which made the background white.
+I Used labs() to give the visualisation a title, and give names to the x and y axes.
+When doing so i am given two warnings and they both relate to the fact that Gorm den Gamles start of reign is a missing value (NA) and therefore R hasn't been able to calculate Gorm den Gamles duration of rule and therefore can't visualise it either
+
+```{r}
+
+kongeraekken %>% 
+  ggplot(aes(x = end_of_reign, y = duration_of_rule)) +
+  geom_line() +
+  geom_smooth() + 
+  theme_minimal() +
+  labs( title = "Duration of reign among Danish rulers",
+        x = "end of reign",
+        y = "duration of reign")
+```
+
+
